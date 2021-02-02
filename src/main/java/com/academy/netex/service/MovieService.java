@@ -8,13 +8,23 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
-@Configurable
 public class MovieService {
+    private static final Logger LOGGER = Logger.getLogger(MovieService.class.getName());
 
-   @Autowired
+    @Autowired
     private MovieRepo repository;
+
+    public MovieService() {
+        System.out.println("aaaaa");
+    }
+
+    public MovieService(MovieRepo repository){
+        this.repository = repository;
+    }
 
     public MovieModel saveMovie(MovieModel movie){
         return repository.save(movie);

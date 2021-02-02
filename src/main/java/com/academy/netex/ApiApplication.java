@@ -27,16 +27,16 @@ public class ApiApplication {
 
     public static final String SEARCH_URL = "http://www.omdbapi.com/?s=TITLE&apikey=APIKEY&page=PAGE";
 
-    public static String ApiLink(String title, String key, String page) {
+//    public static String ApiLink(String title, String key, String page) {
 
-        try {
-            title = URLEncoder.encode(title, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        String requestUrl = SEARCH_URL.replaceAll("TITLE", title).replaceAll("APIKEY", key).replaceAll("PAGE", page);
-        return requestUrl;
-    }
+//        try {
+//            title = URLEncoder.encode(title, "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        String requestUrl = SEARCH_URL.replaceAll("TITLE", title).replaceAll("APIKEY", key).replaceAll("PAGE", page);
+//        return requestUrl;
+//    }
 
     //    public static MovieModel sendGetRequest(String requestUrl){
 //        //StringBuffer response = new StringBuffer();
@@ -69,29 +69,30 @@ public class ApiApplication {
 //        return movie;
 //    }
 //
-    private static String readAll(Reader reader) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        int cp;
-        while ((cp = reader.read()) != -1) {
-            stringBuilder.append((char) cp);
-        }
-        return stringBuilder.toString();
-    }
 
-    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
-        } finally {
-            is.close();
-        }
-    }
+//    private static String readAll(Reader reader) throws IOException {
+//        StringBuilder stringBuilder = new StringBuilder();
+//        int cp;
+//        while ((cp = reader.read()) != -1) {
+//            stringBuilder.append((char) cp);
+//        }
+//        return stringBuilder.toString();
+//    }
+//
+//    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+//        InputStream is = new URL(url).openStream();
+//        try {
+//            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+//            String jsonText = readAll(rd);
+//            JSONObject json = new JSONObject(jsonText);
+//            return json;
+//        } finally {
+//            is.close();
+//        }
+//    }
 
 
-    public static void main(String[] args) throws IOException {
+//    public static void main(String[] args){
 
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        objectMapper.configure(
@@ -150,31 +151,31 @@ public class ApiApplication {
 //        System.out.println(jsonRespons);
 //        }
 
-        int number = 0;
-        try {
-            for (int i = 1; i <= 10; i++) {
-                String page = String.valueOf(i);
-                String url = MovieApplication.ApiLink("batman", "ecadf926", page);
-                JSONObject json = readJsonFromUrl(url);
-                JSONArray arr = json.getJSONArray("Search");
-                for (int j = 0; j < arr.length(); j++) {
+//        int number = 0;
+//        try {
+//            for (int i = 1; i <= 10; i++) {
+//                String page = String.valueOf(i);
+//                //String url = MovieController.ApiLink("batman", "ecadf926", page);
+//                JSONObject json = readJsonFromUrl(url);
+//                JSONArray arr = json.getJSONArray("Search");
+//                for (int j = 0; j < arr.length(); j++) {
+//
+//                    ObjectMapper mapper = new ObjectMapper();
+//                    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//                    JSONObject JsonMovie = arr.getJSONObject(j);
+//                    String stringMovie = JsonMovie.toString(1);
+//                    MovieModel movies = mapper.readValue(stringMovie, MovieModel.class);
+//                    System.out.println(movies);
+//                    number++;
+//                }
+//            }
+//
+//        } catch (JSONException | IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(number);
 
-                    ObjectMapper mapper = new ObjectMapper();
-                    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                    JSONObject JsonMovie = arr.getJSONObject(j);
-                    String stringMovie = JsonMovie.toString(1);
-                    MovieModel movies = mapper.readValue(stringMovie, MovieModel.class);
-                    System.out.println(movies);
-                    number++;
-                }
-            }
-
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(number);
+ }
 
 
-    }
-}
 
