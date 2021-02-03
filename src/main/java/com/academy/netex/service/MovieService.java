@@ -18,14 +18,6 @@ public class MovieService {
     @Autowired
     private MovieRepo repository;
 
-    public MovieService() {
-        System.out.println("aaaaa");
-    }
-
-    public MovieService(MovieRepo repository){
-        this.repository = repository;
-    }
-
     public MovieModel saveMovie(MovieModel movie){
         return repository.save(movie);
     }

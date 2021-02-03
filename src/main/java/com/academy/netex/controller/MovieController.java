@@ -13,6 +13,7 @@ import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 public class MovieController {
         public static final String SEARCH_URL = "http://www.omdbapi.com/?s=TITLE&apikey=APIKEY&page=PAGE";
+
 
     public static String ApiLink(String title, String key, String page){
 
@@ -55,11 +57,13 @@ public class MovieController {
         }
     }
 
-    @Autowired
+
     private MovieService service;
 
-    public MovieController() {
+
+    public MovieController(MovieService service) {
         System.out.println("whatever");
+        this.service = service;
 
         try {
             for (int i = 1; i <= 10; i++) {
@@ -74,8 +78,8 @@ public class MovieController {
                     JSONObject JsonMovie = arr.getJSONObject(j);
                     String stringMovie = JsonMovie.toString(1);
                     MovieModel movie = mapper.readValue(stringMovie, MovieModel.class);
-                    System.out.println(movie);
-                    addMovie(movie);
+                    //System.out.println(movie);
+                    //addMovie(movie);
 
                 }
             }

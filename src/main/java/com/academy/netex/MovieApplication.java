@@ -24,6 +24,8 @@ public class MovieApplication {
     public static void main(String[] args) {
       SpringApplication.run(MovieApplication.class, args);
 
+      //added 100 movies the database using the method from the controller constructor
+      //commented the sout and addMovie from it
 
 
         }
