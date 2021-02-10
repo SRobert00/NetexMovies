@@ -1,19 +1,15 @@
 package com.academy.netex.controller;
 
-import com.academy.netex.MovieApplication;
+
 import com.academy.netex.model.MovieModel;
+import com.academy.netex.model.QMovieModel;
 import com.academy.netex.service.MovieService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
 import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -22,7 +18,7 @@ import java.util.List;
 
 @RestController
 public class MovieController {
-        public static final String SEARCH_URL = "http://www.omdbapi.com/?s=TITLE&apikey=APIKEY&page=PAGE";
+        public static final String SEARCH_URL = "http://www.omdbapi.com/?s=TITLE&type=movie&apikey=APIKEY&page=PAGE";
 
 
     public static String ApiLink(String title, String key, String page){
@@ -62,13 +58,12 @@ public class MovieController {
 
 
     public MovieController(MovieService service) {
-        System.out.println("whatever");
         this.service = service;
 
         try {
             for (int i = 1; i <= 10; i++) {
                 String page = String.valueOf(i);
-                String url = MovieController.ApiLink("batman", "ecadf926", page);
+                String url = MovieController.ApiLink("star", "ecadf926", page);
                 JSONObject json = readJsonFromUrl(url);
                 JSONArray arr = json.getJSONArray("Search");
                 for (int j = 0; j < arr.length(); j++) {
@@ -84,10 +79,50 @@ public class MovieController {
                 }
             }
 
-        } catch (JSONException | IOException e) {
+        } catch (JSONException | IOException e ) {
             e.printStackTrace();
         }
 
+    }
+
+    @GetMapping("/getMoviesOrderedByYear/{from}/{to}")
+    public List<MovieModel> getMoviesOrderedByYear(@PathVariable String from, @PathVariable String to){
+        return service.getJPAQueryFactory()
+                .selectFrom(QMovieModel.movieModel)
+                .where(QMovieModel.movieModel.year.between(from, to))
+                .fetch();
+    }
+
+    @GetMapping("/getMoviesThatContainsTitle/{title}")
+    public List<MovieModel> getMoviesThatContainsTitle(@PathVariable String title){
+        return service.getJPAQueryFactory()
+                .selectFrom(QMovieModel.movieModel)
+                .where(QMovieModel.movieModel.title.contains(title))
+                .fetch();
+    }
+
+    @GetMapping("/getMoviesBetweenYears/{from} {to}")
+    public List<MovieModel> getMoviesBetweenYears(@PathVariable String from, @PathVariable String to){
+        return service.getJPAQueryFactory()
+                .selectFrom(QMovieModel.movieModel)
+                .where(QMovieModel.movieModel.year.between(from, to))
+                .fetch();
+    }
+
+    @GetMapping("/getMovieById/{id}")
+    public List<MovieModel> getMovieById(@PathVariable Integer id) {
+        return service.getJPAQueryFactory()
+                .selectFrom(QMovieModel.movieModel)
+                .where(QMovieModel.movieModel.id.eq(id))
+                .fetch();
+    }
+
+    @GetMapping("/getMoviesFromYear/{year}")
+    public List<MovieModel> getMoviesFromYear(@PathVariable String year){
+        return service.getJPAQueryFactory()
+                .selectFrom(QMovieModel.movieModel)
+                .where(QMovieModel.movieModel.year.eq(year))
+                .fetch();
     }
 
     @PostMapping("/addMovie")

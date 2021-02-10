@@ -2,13 +2,13 @@ package com.academy.netex.service;
 
 import com.academy.netex.model.MovieModel;
 import com.academy.netex.repo.MovieRepo;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
-
-
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
@@ -17,6 +17,13 @@ public class MovieService {
 
     @Autowired
     private MovieRepo repository;
+
+
+    public JPAQueryFactory getJPAQueryFactory(){
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("movies");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        return new JPAQueryFactory(entityManager);
+    }
 
     public MovieModel saveMovie(MovieModel movie){
         return repository.save(movie);
