@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<fields>
+<uniqueKey>id</uniqueKey>
+<field name="title" type="String" indexed="true" stored="true" required="true"/>
+<field name="year" type="String" indexed="true" stored="true" required="true"/>
+<field name="imdb" type="String" indexed="true" stored="true" required="true"/>
+<field name="type" type="String" indexed="true" stored="true" required="true"/>
+<field name="poster" type="String" indexed="true" stored="true" required="true"/>
+</fields>
+
