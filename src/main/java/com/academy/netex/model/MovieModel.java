@@ -27,7 +27,7 @@ public class MovieModel implements Serializable {
     @Field
     @Column(name = "year")
     @JsonProperty("year")
-    private String year;
+    private Integer year;
 
     @Field
     @Column(name = "imdb")
@@ -64,12 +64,12 @@ public class MovieModel implements Serializable {
     }
 
     @JsonGetter("Year")
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
     @JsonSetter("Year")
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

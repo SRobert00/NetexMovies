@@ -85,11 +85,11 @@ public class MovieController {
 
     }
 
-    @GetMapping("/getMoviesOrderedByYear/{from}/{to}")
-    public List<MovieModel> getMoviesOrderedByYear(@PathVariable String from, @PathVariable String to){
+    @GetMapping("/getMoviesOrderedByYear")
+    public List<MovieModel> getMoviesOrderedByYear(){
         return service.getJPAQueryFactory()
                 .selectFrom(QMovieModel.movieModel)
-                .where(QMovieModel.movieModel.year.between(from, to))
+                .orderBy(QMovieModel.movieModel.year.asc())
                 .fetch();
     }
 
@@ -102,7 +102,7 @@ public class MovieController {
     }
 
     @GetMapping("/getMoviesBetweenYears/{from} {to}")
-    public List<MovieModel> getMoviesBetweenYears(@PathVariable String from, @PathVariable String to){
+    public List<MovieModel> getMoviesBetweenYears(@PathVariable Integer from, @PathVariable Integer to){
         return service.getJPAQueryFactory()
                 .selectFrom(QMovieModel.movieModel)
                 .where(QMovieModel.movieModel.year.between(from, to))
@@ -118,7 +118,7 @@ public class MovieController {
     }
 
     @GetMapping("/getMoviesFromYear/{year}")
-    public List<MovieModel> getMoviesFromYear(@PathVariable String year){
+    public List<MovieModel> getMoviesFromYear(@PathVariable Integer year){
         return service.getJPAQueryFactory()
                 .selectFrom(QMovieModel.movieModel)
                 .where(QMovieModel.movieModel.year.eq(year))
